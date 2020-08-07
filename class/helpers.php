@@ -85,6 +85,7 @@
 
          // Cek produk
          $cek_produk = $this->query("SELECT * FROM produk WHERE id_kategori = '$kategori' AND nama_barang = '$nama_produk' ");
+         
 
          // Jika nama produk AND kategori sudah diinputkan maka hasilnya tidak NULL
          // Jika belum maka akan bernilai null
