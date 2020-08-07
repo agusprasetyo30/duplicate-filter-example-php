@@ -20,7 +20,7 @@
          <h1 class="text-center">Produk</h1>
 
          <a href="../" class="btn btn-primary float-left mb-2">Kembali</a>
-         <a href="#" class="btn btn-success float-right mb-2">Tambah Produk</a>
+         <a href="./add_produk.php" class="btn btn-success float-right mb-2">Tambah Produk</a>
          <table class="table table-hover table-bordered">
             <thead>
                <tr>

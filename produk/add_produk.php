@@ -2,6 +2,7 @@
    include "../class/helpers.php";
 
    $db = new helpers();
+
 ?>
 
 <!DOCTYPE html>
@@ -11,29 +12,50 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-   <title>Tambah Kategori</title>
+   <title>Tambah Produk</title>
 </head>
 <body>
    <div class="container p-3">
       <div class="row justify-content-center">
          
          <div class="col-md-6">
-            <h1 class="text-center">Tambah Kategori</h1>
+            <h1 class="text-center">Tambah Produk</h1>
             <a href="./" class="btn btn-primary mb-2">Kembali</a>
             <form action="" method="post">
                <div class="card card-default">
                   <div class="card-header bg-primary text-white">
-                     Tambah Kategori
+                     Tambah Produk
                   </div>
                   <div class="card-body">
                      <div class="form-group">
-                        <label>Nama Kategori</label>
+                        <label>Nama Produk</label>
                         <input type="text" name="nama" class="form-control">
+                     </div>
+
+                     <div class="form-group">
+                        <label>Kategori</label>
+                        <select name="kategori" class="form-control">
+                           <?php foreach ($db->getAllKategori() as $kategori) { ?>
+
+                              <option value="<?= $kategori['id_kategori'] ?>"><?= $kategori['nama_kategori'] ?></option>
+
+                           <?php } ?>
+                        </select>
+                     </div>
+
+                     <div class="form-group">
+                        <label>Harga</label>
+                        <input type="text" name="harga" class="form-control">
                      </div>
 
                      <div class="form-group">
                         <label>Keterangan</label>
                         <textarea name="keterangan" rows="3" class="form-control"></textarea>
+                     </div>
+
+                     <div class="form-group">
+                        <label>Gambar</label>
+                        <input type="text" name="gambar" class="form-control" value="NO PHOTO">
                      </div>
 
                      <input type="submit" value="Simpan" name="simpan" class="btn btn-success btn-block">
@@ -53,9 +75,8 @@
 <?php
    // keadaan ketika tombol simpan ditekan
    if (isset($_POST['simpan'])) {
-
       // return bernilai TRUE maka akan tampil alert SUKSES
-      if ($db->addKategori($_POST)) {
+      if ($db->addProduk($_POST)) {
          echo '
             <script>
                alert("Data berhasil ditambahkan");
@@ -63,7 +84,7 @@
             </script>
          ';
       
-      // jika return dari $db->addKategori($_POST) bernilai FALSE maka akan tampil 
+      // jika return dari $db->addProduk($_POST) bernilai FALSE maka akan tampil 
       // alert TIDAK DAPAT MENAMBAHKAN DATA DIKARENAKAN DATA SUDAH DIINPUTKAN
       } else {
          echo '
