@@ -1,8 +1,8 @@
 <?php
+   include "../koneksi.php";
    include "../class/helpers.php";
 
    $db = new helpers();
-
 ?>
 
 <!DOCTYPE html>
@@ -75,16 +75,33 @@
 <?php
    // keadaan ketika tombol simpan ditekan
    if (isset($_POST['simpan'])) {
-      // return bernilai TRUE maka akan tampil alert SUKSES
-      if ($db->addProduk($_POST)) {
+
+      // mengabil data input
+      $nama_produk = $_POST['nama'];
+      $kategori = $_POST['kategori'];
+      $keterangan = $_POST['keterangan'];
+      $harga = $_POST['harga'];
+      $gambar = $_POST['gambar'];
+
+      // Cek produk
+      $cek_produk = mysqli_query($koneksi, "SELECT * FROM produk WHERE id_kategori = '$kategori' AND nama_barang = '$nama_produk' ");
+
+      // cek data ada atau tidak
+
+      // Jika nama produk AND kategori sudah diinputkan maka hasilnya tidak NULL
+      // Jika belum maka akan bernilai null
+      if (mysqli_fetch_assoc($cek_produk) == NULL) {
+         // Keadaan jika data belum diinputkan, maka dapat melakukan penambahan
+         $query = "INSERT INTO produk VALUES(NULL, '$kategori', '$nama_produk', '$keterangan', '$harga', '$gambar')";
+         mysqli_query($koneksi, $query);
+      
          echo '
             <script>
                alert("Data berhasil ditambahkan");
                window.location.href = "./";
             </script>
          ';
-      
-      // jika return dari $db->addProduk($_POST) bernilai FALSE maka akan tampil 
+
       // alert TIDAK DAPAT MENAMBAHKAN DATA DIKARENAKAN DATA SUDAH DIINPUTKAN
       } else {
          echo '

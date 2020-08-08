@@ -1,7 +1,5 @@
 <?php
-   include "../class/helpers.php";
-
-   $db = new helpers();
+   include "../koneksi.php";
 ?>
 
 <!DOCTYPE html>
@@ -53,18 +51,28 @@
 <?php
    // keadaan ketika tombol simpan ditekan
    if (isset($_POST['simpan'])) {
+      
+      // mengabil data input
+      $nama_kategori = $_POST['nama'];
+      $keterangan = $_POST['keterangan'];
+      
+      // Cek kategori
+      $cek_kategori = mysqli_query($koneksi, "SELECT * FROM kategori_produk WHERE nama_kategori = '$nama_kategori' ");
 
-      // return bernilai TRUE maka akan tampil alert SUKSES
-      if ($db->addKategori($_POST)) {
+      // cek data ada atau tidak
+
+      if (mysqli_fetch_assoc($cek_kategori) == NULL) {
+         // Keadaan jika data belum diinputkan, maka dapat melakukan penambahan
+         $query = "INSERT INTO kategori_produk VALUES(NULL, '$nama_kategori', '$keterangan')";
+         mysqli_query($koneksi, $query);
+      
          echo '
             <script>
                alert("Data berhasil ditambahkan");
                window.location.href = "./";
             </script>
          ';
-      
-      // jika return dari $db->addKategori($_POST) bernilai FALSE maka akan tampil 
-      // alert TIDAK DAPAT MENAMBAHKAN DATA DIKARENAKAN DATA SUDAH DIINPUTKAN
+
       } else {
          echo '
             <script>
@@ -73,6 +81,15 @@
             </script>
          ';
       }
+      // return bernilai TRUE maka akan tampil alert SUKSES
+      // if ($db->addKategori($_POST)) {
+      
+      
+      // jika return dari $db->addKategori($_POST) bernilai FALSE maka akan tampil 
+      // alert TIDAK DAPAT MENAMBAHKAN DATA DIKARENAKAN DATA SUDAH DIINPUTKAN
+      // } else {
+      
+      // }
    }
    
 ?>
